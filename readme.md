@@ -10,6 +10,6 @@ curl -XPOST http://localhost:8080/users -H 'Content-Type: application/json' -d '
 ```
 * 조회
 ```bash
-curl -XGET http://localhost:8080/users -H 'Content-Type: application/json' -H 'sample-email: bwjhj1030@gmail.com'
+curl -XGET http://localhost:8080/users/me -H 'Content-Type: application/json' -H 'sample-email: bwjhj1030@gmail.com'
 {"email":"bwjhj1030@gmail.com","createdAt":"2021-11-09T18:26:42.882"}
 ```
