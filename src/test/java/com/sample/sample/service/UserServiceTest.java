@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -54,6 +55,21 @@ class UserServiceTest {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             userService.findByEmail(email);
         });
+    }
+
+    @Test
+    @Transactional
+    void lock_checkUpdatedAtIsRenewed() throws InterruptedException {
+        String email = "test@test.com";
+        User user = userService.createUser(email);
+
+        assertThat(user.getCreatedAt()).isEqualTo(user.getUpdatedAt());
+
+        Thread.sleep(5);
+
+        userService.lockUser(user);
+
+        assertThat(user.getCreatedAt()).isBefore(user.getUpdatedAt());
     }
 
 }
