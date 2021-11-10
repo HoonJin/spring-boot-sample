@@ -18,7 +18,7 @@ import java.util.List;
 @DynamicInsert
 @Getter
 @Setter
-@ToString(callSuper = true, exclude = {"user", "order"})
+@ToString(callSuper = true, exclude = {"user", "orderDetails"})
 public class Order extends BaseEntity {
 
     @Column(name = "user_id", nullable = false, updatable = false)
