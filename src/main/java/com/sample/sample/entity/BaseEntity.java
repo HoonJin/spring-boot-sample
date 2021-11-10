@@ -2,13 +2,14 @@ package com.sample.sample.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @MappedSuperclass
 @Getter
-@Setter
+@ToString
 public abstract class BaseEntity {
 
     @Id @GeneratedValue
@@ -17,9 +18,11 @@ public abstract class BaseEntity {
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
+    @Setter
     @Column(nullable = false)
     private LocalDateTime updatedAt;
 
+    @Setter
     private LocalDateTime deletedAt;
 
     @PrePersist

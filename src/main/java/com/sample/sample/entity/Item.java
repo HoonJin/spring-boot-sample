@@ -8,23 +8,24 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
-@Table(name = "users")
+@Table(name = "items")
 @DynamicUpdate
 @DynamicInsert
 @Getter
 @Setter
-@ToString(callSuper = true, exclude = {"carts"})
-public class User extends BaseEntity {
+@ToString(callSuper = true)
+public class Item extends BaseEntity {
 
-    @Column(unique = true)
-    private String email;
+    @Column(nullable = false)
+    private String name;
 
-    @OneToMany(mappedBy = "user")
-    private List<Cart> carts = new ArrayList<>();
+    @Column(nullable = false)
+    private Long price;
+
+    @Column(nullable = false)
+    private Long stock;
+
 }
