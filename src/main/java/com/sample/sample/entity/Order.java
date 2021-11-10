@@ -37,6 +37,7 @@ public class Order extends BaseEntity {
 
     private String memo;
 
+    @Setter(AccessLevel.NONE)
     @OneToMany(mappedBy = "order")
     private List<OrderDetail> orderDetails = new ArrayList<>();
 }

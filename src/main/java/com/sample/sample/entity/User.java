@@ -1,5 +1,6 @@
 package com.sample.sample.entity;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -25,9 +26,11 @@ public class User extends BaseEntity {
     @Column(unique = true)
     private String email;
 
+    @Setter(AccessLevel.NONE)
     @OneToMany(mappedBy = "user")
     private List<Cart> carts = new ArrayList<>();
 
+    @Setter(AccessLevel.NONE)
     @OneToMany(mappedBy = "user")
     private List<Order> orders = new ArrayList<>();
 }

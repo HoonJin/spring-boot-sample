@@ -48,7 +48,7 @@ class ItemServiceTest {
 
     @Test
     @Transactional
-    void decreaseStock() {
+    void decreaseStock_success() {
         Item item = createSampleData();
         Long beforeStock = item.getStock();
 
