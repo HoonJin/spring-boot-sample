@@ -18,6 +18,7 @@ spring:
       use-new-id-generator-mappings: false
     properties:
       hibernate:
+        default_batch_fetch_size: 300
         show_sql: true
         format_sql: true
 

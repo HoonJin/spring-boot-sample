@@ -21,4 +21,16 @@ public class ItemService {
             throw new IllegalStateException();
         }
     }
+
+    @Transactional
+    public void decreaseStock(Item item, Long amount) {
+        itemRepository.lock(item);
+        item.setStock(item.getStock() - amount);
+
+        if (item.getStock() < 0) {
+            throw new IllegalStateException();
+        }
+
+        itemRepository.save(item);
+    }
 }

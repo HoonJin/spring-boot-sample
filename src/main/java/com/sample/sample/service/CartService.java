@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -21,6 +22,10 @@ public class CartService {
 
     private final ItemService itemService;
 
+    public List<Cart> getByUser(User user) {
+        return cartRepository.getByUserId(user.getId());
+    }
+
     @Transactional
     public Cart addToCart(User user, Item item, Long amount) {
         itemService.checkStock(item.getId(), amount);
@@ -28,7 +33,7 @@ public class CartService {
         Cart cart = new Cart();
         cart.setAmount(amount);
         cart.setUserId(user.getId());
-        cart.setItem(item);
+        cart.setItemId(item.getId());
         return cartRepository.save(cart);
     }
 

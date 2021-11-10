@@ -7,7 +7,6 @@ import com.sample.sample.repository.CartRepository;
 import com.sample.sample.repository.ItemRepository;
 import com.sample.sample.repository.UserRepository;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 class CartServiceTest {
@@ -53,7 +53,6 @@ class CartServiceTest {
         Item item = createSampleItem();
 
         Cart cart = cartService.addToCart(user, item, 1L);
-        System.out.println("cart = " + cart);
 
         assertThat(cart.getId()).isNotNull();
     }
@@ -63,7 +62,7 @@ class CartServiceTest {
         User user = createSampleUser();
         Item item = createSampleItem();
 
-        Assertions.assertThrows(IllegalStateException.class,
+        assertThrows(IllegalStateException.class,
                 () -> cartService.addToCart(user, item, 3L));
     }
 
