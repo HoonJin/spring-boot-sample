@@ -15,24 +15,24 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(path = "/users", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+@RequestMapping(consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
 public class UserController {
 
     private final UserService userService;
     private final UserRepository userRepository;
 
-    @GetMapping
+    @GetMapping("/users")
     public List<GetUserDto> getUsers() {
         return userRepository.findAll().stream().map(GetUserDto::of)
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/me")
+    @GetMapping("/users/me")
     public GetUserDto getUser(User user) {
         return GetUserDto.of(user);
     }
 
-    @PostMapping
+    @PostMapping("/users")
     public GetUserDto createUser(@RequestBody CreateUserDto createUserDto) {
         User user = userService.createUser(createUserDto.getEmail());
         return GetUserDto.of(user);
