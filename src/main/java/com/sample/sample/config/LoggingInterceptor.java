@@ -7,16 +7,22 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.time.LocalDateTime;
+import java.util.Optional;
+import java.util.UUID;
 
 @Component
 @Slf4j
 public class LoggingInterceptor implements HandlerInterceptor {
 
+    private static final String REQUEST_ID_KEY = "Request-Id";
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         boolean handled = handler instanceof HandlerMethod;
         if (handled) {
+            String requestId = Optional.ofNullable(request.getHeader(REQUEST_ID_KEY))
+                    .orElseGet(() -> UUID.randomUUID().toString());
+            request.setAttribute(REQUEST_ID_KEY, requestId);
             log.info(generateMessageTemplate(request));
         }
 
@@ -32,9 +38,9 @@ public class LoggingInterceptor implements HandlerInterceptor {
     private String generateMessageTemplate(HttpServletRequest request) {
         String uri = request.getRequestURI();
         String method = request.getMethod();
-        String requestedSessionId = request.getRequestedSessionId();
         String remoteAddr = request.getRemoteAddr();
+        String requestId = String.valueOf(request.getAttribute(REQUEST_ID_KEY));
 
-        return "[" + LocalDateTime.now() + "][" + method + " " + uri + "][" + remoteAddr + "][" + requestedSessionId + "]";
+        return "[" + method + " " + uri + "][" + remoteAddr + "][" + requestId + "]";
     }
 }
