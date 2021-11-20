@@ -6,6 +6,7 @@ import com.sample.sample.entity.Item;
 import com.sample.sample.entity.Order;
 import com.sample.sample.entity.OrderDetail;
 import com.sample.sample.entity.User;
+import com.sample.sample.exception.UnprocessableEntityException;
 import com.sample.sample.repository.*;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
@@ -105,7 +106,7 @@ class OrderServiceTest {
         User user = userRepository.findByEmail("test@test.com").get();
         Item item = itemRepository.findByName("macbook air").get();
 
-        assertThrows(IllegalStateException.class,
+        assertThrows(UnprocessableEntityException.class,
                 () -> orderService.paymentOneItem(user, PaymentMethod.CARD, item, item.getStock() + 1, Optional.empty()));
     }
 

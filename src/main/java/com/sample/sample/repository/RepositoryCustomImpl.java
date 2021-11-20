@@ -12,7 +12,7 @@ public class RepositoryCustomImpl implements RepositoryCustom {
     private final EntityManager entityManager;
 
     @Override
-    public void lock(BaseEntity entity) {
+    public void lockAndRefresh(BaseEntity entity) {
         entity.setUpdatedAt(LocalDateTime.now());
         entityManager.persist(entity);
         entityManager.flush();

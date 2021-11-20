@@ -1,6 +1,7 @@
 package com.sample.sample.service;
 
 import com.sample.sample.entity.User;
+import com.sample.sample.exception.NotFoundException;
 import com.sample.sample.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,12 +24,12 @@ public class UserService {
 
     public User findByEmail(String email) {
         return userRepository.findByEmail(email)
-                .orElseThrow(IllegalArgumentException::new);
+                .orElseThrow(() -> new NotFoundException("not_found", "유저가 없습니다."));
     }
 
     @Transactional
     public User lockUser(User user) {
-        userRepository.lock(user);
-        return userRepository.getById(user.getId());
+        userRepository.lockAndRefresh(user);
+        return user;
     }
 }

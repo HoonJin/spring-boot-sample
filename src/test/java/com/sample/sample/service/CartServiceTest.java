@@ -3,6 +3,7 @@ package com.sample.sample.service;
 import com.sample.sample.entity.Cart;
 import com.sample.sample.entity.Item;
 import com.sample.sample.entity.User;
+import com.sample.sample.exception.UnprocessableEntityException;
 import com.sample.sample.repository.CartRepository;
 import com.sample.sample.repository.ItemRepository;
 import com.sample.sample.repository.UserRepository;
@@ -62,7 +63,7 @@ class CartServiceTest {
         User user = createSampleUser();
         Item item = createSampleItem();
 
-        assertThrows(IllegalStateException.class,
+        assertThrows(UnprocessableEntityException.class,
                 () -> cartService.addToCart(user, item, 3L));
     }
 
@@ -81,7 +82,7 @@ class CartServiceTest {
 //        cartRepository.lock(cart);
 //        List<Cart> carts = cartRepository.getByUserId(cart.getUser().getId());
 
-        userRepository.lock(user);
+        userRepository.lockAndRefresh(user);
         List<Cart> carts = user.getCarts();
 
         assertThat(carts.size()).isEqualTo(1L);

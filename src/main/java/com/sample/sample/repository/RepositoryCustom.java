@@ -4,6 +4,6 @@ import com.sample.sample.entity.BaseEntity;
 
 public interface RepositoryCustom {
 
-    void lock(BaseEntity entity);
+    void lockAndRefresh(BaseEntity entity);
     
 }

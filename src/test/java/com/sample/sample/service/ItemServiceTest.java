@@ -1,6 +1,7 @@
 package com.sample.sample.service;
 
 import com.sample.sample.entity.Item;
+import com.sample.sample.exception.UnprocessableEntityException;
 import com.sample.sample.repository.ItemRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -42,7 +43,7 @@ class ItemServiceTest {
     void checkStock_fail() {
         Item item = createSampleData();
 
-        assertThrows(IllegalStateException.class,
+        assertThrows(UnprocessableEntityException.class,
                 () -> itemService.checkStock(item.getId(), 3L));
     }
 
@@ -72,7 +73,7 @@ class ItemServiceTest {
         Item item = createSampleData();
         Long beforeStock = item.getStock();
 
-        assertThrows(IllegalStateException.class,
+        assertThrows(UnprocessableEntityException.class,
                 () -> itemService.decreaseStock(item, beforeStock + 1));
     }
 }

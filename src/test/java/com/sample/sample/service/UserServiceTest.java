@@ -1,6 +1,7 @@
 package com.sample.sample.service;
 
 import com.sample.sample.entity.User;
+import com.sample.sample.exception.NotFoundException;
 import com.sample.sample.repository.UserRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -50,9 +51,9 @@ class UserServiceTest {
     }
 
     @Test
-    void findByEmail_illegalArgumentException() {
+    void findByEmail_NotFoundException() {
         String email = "not_exist@test.com";
-        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+        Assertions.assertThrows(NotFoundException.class, () -> {
             userService.findByEmail(email);
         });
     }
