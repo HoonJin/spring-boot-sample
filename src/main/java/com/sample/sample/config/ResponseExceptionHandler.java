@@ -37,7 +37,7 @@ public class ResponseExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(Exception.class)
-    protected ResponseEntity<Object> handleCustomException(Exception ex, WebRequest request) {
+    public ResponseEntity<Object> handleCustomException(Exception ex, WebRequest request) {
         ErrorResponse res = ErrorResponse.of(ex);
         String prefix = RequestUtils.generateLogPrefix(request);
         log.error(prefix + " UNKNOWN ERROR " + ex.getClass().getSimpleName() + " ", ex);
